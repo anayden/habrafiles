@@ -1,0 +1,27 @@
+- if @files.empty?
+  %h1 Файлов нет.
+- else
+  .list
+    %h1 Список файлов
+    %table{ :cellspacing => 0}
+      %tr
+        %th Файл
+        %th Загружен
+        %th Скачан
+        %th Удалить
+      - @files.each do |file|
+        %tr
+          %td.filename
+            %a{ :href => "/#{file.sha}/#{file.id}?nowait=true", :title => file.filename }= file.filename
+            = "(#{file.filesize/1024} Kb)"
+            %a{ :href => "/#{file.sha}/#{file.id}" } Для пересылки 
+          %td.created_at= file.created_at.strftime("%d %b")
+          %td.downloads= file.downloads
+          %td.delete
+            %a{ :href => "/#{file.sha}/#{file.id}/delete", :title => "Удалить", :onclick => "return ORLY();" } Удалить
+.upload
+  %h1 Добавить
+  %form{ :name => "new_file", :enctype => "multipart/form-data", :method => "post", :action => "/" }
+    %input{ :name => "file", :type => "file" }
+    %br
+    %input{ :type => "submit", :value => "Закачать" }

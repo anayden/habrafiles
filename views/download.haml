@@ -1,0 +1,17 @@
+%script{ :type => "text/javascript" }
+  nowait = '?nowait=true';
+  var timeout = true;
+  setTimeout('if (timeout) {window.location = window.location + nowait;}', 10000);
+%h1 Загрузка файла
+.info
+  Вы собираетесь скачать файл
+  %span.filename>= " #{@file.filename}"
+  , размером 
+  %span.filesize
+    = @file.filesize/1024
+    килобайт. 
+  Скачивание начнется в течение
+  %span#seconds 10
+  секунд. Нажмите на
+  %a{ :href => "#{params[:sha]}?nowait=true", :onclick => 'timeout = false;' }эту ссылку
+  если не хотите ждать
